@@ -49,3 +49,7 @@ resilience4j:
         timeout-duration: 15s
       watchCB:
         timeout-duration: 15s
+
+# [TODO-7.5] Must be the same key MSAccount signs tokens with
+jwt:
+  secret: ${JWT_SECRET}
