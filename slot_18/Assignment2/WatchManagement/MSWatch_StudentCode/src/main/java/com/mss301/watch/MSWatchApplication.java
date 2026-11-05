@@ -2,7 +2,10 @@ package com.mss301.watch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
+// [TODO-6.7]
+@EnableFeignClients
 @SpringBootApplication
 public class MSWatchApplication {
 
