@@ -4,3 +4,48 @@ server:
 spring:
   application:
     name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          # [TODO-7.1] One route per service; [TODO-7.2] /internal/** is deliberately not routed
+          routes:
+            - id: account-service
+              uri: ${ACCOUNT_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/auth/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: accountCB
+                    fallbackUri: forward:/fallback/account
+            - id: brand-service
+              uri: ${BRAND_SERVICE_URL:http://localhost:8082}
+              predicates:
+                - Path=/api/brands/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: brandCB
+                    fallbackUri: forward:/fallback/brand
+            # [TODO-7.2] The orchestrator also serves the Saga monitoring API
+            - id: watch-service
+              uri: ${WATCH_SERVICE_URL:http://localhost:8083}
+              predicates:
+                - Path=/api/watches/**,/api/sagas/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: watchCB
+                    fallbackUri: forward:/fallback/watch
+
+# [TODO-7.6] A Saga that retries compensation takes longer than the 1s default
+resilience4j:
+  timelimiter:
+    instances:
+      accountCB:
+        timeout-duration: 15s
+      brandCB:
+        timeout-duration: 15s
+      watchCB:
+        timeout-duration: 15s
