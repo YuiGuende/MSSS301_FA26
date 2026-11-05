@@ -1,0 +1,8 @@
+# [TODO-0.2] Never commit build output, IDE metadata or secrets
+target/
+.idea/
+*.iml
+.vscode/
+.env
+*.log
+HELP.md

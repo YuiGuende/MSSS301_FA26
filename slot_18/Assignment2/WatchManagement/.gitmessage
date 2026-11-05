@@ -1,0 +1,8 @@
+# [TODO-0.1] Commit template: <type>(<scope>): <subject>
+# type : feat | fix | refactor | build | test | docs | chore
+# scope: ms-account | ms-brand | ms-watch | gateway | config | docker | postman
+# subject: English, imperative, lowercase, <= 72 chars, no trailing period
+
+# Body: explain WHY the change is needed
+
+# Refs: TODO-x.y
